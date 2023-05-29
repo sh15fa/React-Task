@@ -1,0 +1,9 @@
+.todoList{
+    margin: 2vw 20vh;
+    padding: 1.5vw 0px;
+    display: flex;
+    justify-content: space-between;
+}
+.divBtn{
+    width: 25vw;
+}

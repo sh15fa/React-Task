@@ -1,0 +1,10 @@
+h1{
+    text-align: center;
+}
+
+.addTask{
+    border: 0.1vh solid rgb(193, 211, 212);
+    margin: 2vw 20vh;
+    padding: 1.5vw;
+    border-radius: 0.7vh;
+}

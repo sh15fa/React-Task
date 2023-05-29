@@ -1,0 +1,31 @@
+.icons{
+    background: rgb(22, 163, 183);
+    padding: 1.5vh;
+    
+}
+.icons:hover{
+    background: rgb(106, 176, 187);
+
+}
+.icon{
+   color: white;  
+}
+
+.inputField{
+    border: 0.1vh solid rgb(193, 211, 212);
+    border-radius: 0.7vh;
+    display: flex; 
+    margin-bottom:3vh ;
+    
+}
+
+input {
+    font-size: 1rem;
+    width: 100%;
+    border:0vh ;
+    
+    
+}
+input [type=text]:focus{
+    border-color: rgb(193, 211, 212);
+}
