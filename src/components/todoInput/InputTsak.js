@@ -1,12 +1,27 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useRef } from "react";
 import classes from './InputTsak.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import Button from "../UI/Button";
 
-const InputTask = ()=>{
+const InputTask = (props)=>{
+    const titleRef = useRef('');
+
+    function submitHandler(event) {
+        event.preventDefault();
+    
+        const task = {
+          title: titleRef.current.value,
+          done:false
+        };
+    
+        props.onAddTask(task);
+      }
+
+
+
     return <Fragment>
-       <form >
+       <form onSubmit={submitHandler}>
        <div className={classes.inputField}>
        <div className={classes.icons}>
         <FontAwesomeIcon 
@@ -14,9 +29,9 @@ const InputTask = ()=>{
         className={classes.icon}
          size="lg"/>
         </div>
-        <input type="text" placeholder="New Todo"  />
+        <input type="text" placeholder="New Todo" ref={titleRef} />
         </div>
-        <Button>Add new task</Button>
+        <Button >Add new task</Button>
         
        </form> 
     </Fragment>
