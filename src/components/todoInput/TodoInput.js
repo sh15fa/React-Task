@@ -1,18 +1,24 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import classes from './TodoInput.module.css';
 import InputTask from "./InputTsak";
+import {db} from '../../services/firebase.config';
+import {  addDoc ,collection} from "firebase/firestore";
 
 const TodoInput = ()=>{
-    async function onAddTaskHandler(task){
-        const response=await fetch('https://react-task-master-default-rtdb.firebaseio.com/tasks.json',
-        {
-          method:'POST',
-          body:JSON.stringify(task),
-         
-        });
-        const data=await response.json();
-        console.log(data);
+    const collectionRef = collection(db ,'tasks' );
+
+    const  onAddTaskHandler=async(task)=>{
+
+        try{
+            
+            await addDoc(collectionRef,task);
+
+        }catch(err){
+            console.log(err);
+
+        }
       }
+      
     return <Fragment>
         <h1>TodoInput</h1>
         <section className={classes.addTask}>

@@ -1,0 +1,84 @@
+li{
+    list-style: none;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+   
+     margin: 2vw 20vh;
+ 
+     border-radius: 0.7vh;
+ }
+ 
+ .border{
+     border: 1px solid rgb(193, 211, 212);;
+     border-radius: 2px;
+     padding-top: 1vh;
+     padding-bottom: 1vh;
+ }
+ .title-done{
+     color:rgb(249, 52, 52);
+     text-decoration-line: line-through;
+     font-size: 20px;
+     font-weight: normal;
+     text-align: left;
+     padding-left: 2vw;
+ }
+ .title-notDone{
+     color:rgb(13, 13, 13);
+    
+     font-size: 20px;
+     font-weight: normal;
+     text-align: left;
+     padding-left: 2vw; 
+ }
+ .icons{
+     padding-right: 3vw;
+     display: flex;
+     justify-content: space-evenly;
+ }
+  span{
+     padding-right: 2vw;
+    }
+     .checked :checked:after{
+        background: white;
+        color: rgb(9, 88, 9);
+     }
+     
+     input[type='checkbox'] {
+        
+        accent-color: green;
+        
+     }
+
+     
+     .trash{
+        color: red;
+     }
+     .trash:hover{
+        color: rgb(179, 5, 5);
+     }
+     .edit{
+        color:#e4bd2f
+     }
+     .edit:hover{
+        color:#ffc800
+     }
+     .btn,.btnClose{
+        padding: 0.9vh 0.7vw;
+        border-radius: 1vh;
+        color: white;
+        border: 0px;
+     }
+     .btn{
+       background:  rgb(106, 176, 187);
+     }
+     .btnClose{
+        background: gray;
+     }
+     .btn:hover{
+        background:rgb(128, 209, 221);
+     }
+     .btnClose:hover{
+        background: rgb(168, 161, 161);
+     }
+     

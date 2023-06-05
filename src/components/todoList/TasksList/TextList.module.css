@@ -1,0 +1,12 @@
+.ul{
+    padding-left: 0;
+}
+.divBtn{
+    width: 37vw;
+}
+.btn{
+    background: rgb(190, 19, 19);
+}
+.btn:hover{
+    background: rgb(219, 17, 17);
+}

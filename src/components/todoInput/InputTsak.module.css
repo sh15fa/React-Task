@@ -29,3 +29,7 @@ input {
 input [type=text]:focus{
     border-color: rgb(193, 211, 212);
 }
+.error-text {
+    color: #b40e0e;
+    padding: 0px 3vw;
+  }
