@@ -13,3 +13,34 @@
     background: rgb(106, 176, 187);
 
 }
+.divBtn{
+    width: 37vw;
+}
+.btn{
+    background: rgb(190, 19, 19);
+}
+.btn:hover{
+    background: rgb(219, 17, 17);
+}
+
+.btnConf,.btnClose{
+    padding: 0.9vh 0.7vw;
+    border-radius: 1vh;
+    color: white;
+    border: 0px;
+ }
+ .btnConf{
+   background:  rgb(106, 176, 187);
+ }
+ .btnClose{
+    background: gray;
+ }
+ .btnConf:hover{
+    background:rgb(128, 209, 221);
+ }
+ .btnClose:hover{
+    background: rgb(168, 161, 161);
+ }
+ .modalBody{
+    font-weight:600;
+ }

@@ -84,11 +84,10 @@ const handleDoneTask=(id)=>{
 //deletting a task
   const handleDeleteTask=async(id)=>{
     try{
-        if(window.confirm('Are you sure you want delete this task')){
             const documentRef = doc(db , "tasks" , id);
         await deleteDoc(documentRef );
         
-        }
+        
     }catch(err){
       console.log(err);  
     }
@@ -105,38 +104,28 @@ const handleDoneTask=(id)=>{
   };
   //delete all Or done tasks
   const handleDeleteAllOrDoneTask=async(allOrDone)=>{
-   let bool;
     let tasks=[];
     await getDocs (collectionRef).then((task)=>{
       tasks= task.docs.map(doc => ({...doc.data(),id:doc.id}));
       
   });
-  if(allOrDone==false){
-   if( window.confirm('Are you sure you want delete All tasks')){
-      bool=false;
-   }
-    
-  }
-  else if(allOrDone=== true ){
-    if(window.confirm('Are you sure you want delete your Done tasks')){
-      bool=true;
-    }
-    
-  }
-    for(let i =0;i<tasks.length;i++){
+  if(tasks.length<=0){
+    return <p>There are no tasks to delete</p>;
+  }else{for(let i =0;i<tasks.length;i++){
       const documentRef = doc(db , "tasks" , tasks[i].id);
-      if(bool===false){
+      if(allOrDone===false){
          await deleteDoc(documentRef );
 
         
       }
-      else if(bool=== true && tasks[i].done===true){
+      else if(allOrDone=== true && tasks[i].done===true){
         
         await deleteDoc(documentRef );
         
       }
       
-    }
+    }}
+    
 
     
 
@@ -153,7 +142,8 @@ const handleDoneTask=(id)=>{
         </div>
         
         {taskes.length===0 && <p className={classes.notaskYet}>There is no tasks here yet</p>}
-        {taskes.length>0 && <TasksList taskes={taskes} handleDoneTask={handleDoneTask} 
+        {taskes.length>0 && <TasksList taskes={taskes} 
+        handleDoneTask={handleDoneTask} 
         handleDeleteTask={handleDeleteTask}
         handleDeleteAllOrDoneTask={handleDeleteAllOrDoneTask}
         updateTask={updateTask}

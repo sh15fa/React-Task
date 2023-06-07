@@ -3,7 +3,17 @@ import Task from '../Task/Task';
 import classes from './TextList.module.css';
 import classe from '../TodoList.module.css';
 import Button from '../../UI/Button';
+import ConfirmModal from '../../UI/ConfirmModal';
 export default function TasksList(props) {
+  const done =true;
+  const all = false;
+  let tasks=[];
+  for(let i=0;i<props.taskes.length;i++){
+    if(props.taskes[i].done===true){
+      tasks.push(props.taskes[i]);
+    }
+  }
+  
   
   return (<Fragment>
     <ul className={classes.ul}>
@@ -20,9 +30,8 @@ export default function TasksList(props) {
       ))}
     </ul>
     <div className={classe.todoList}>
-    
-            <div className={classes.divBtn}><Button className={classes.btn} onClick={()=>props.handleDeleteAllOrDoneTask(true)}>Delete done tasks</Button></div>
-            <div className={classes.divBtn}><Button  className={classes.btn} onClick={()=>props.handleDeleteAllOrDoneTask(false)}>Delete all tasks</Button></div>
+            <ConfirmModal tasks={tasks} bool={done} handleDeleteAllOrDoneTask={props.handleDeleteAllOrDoneTask}> Delete done tasks</ConfirmModal>
+            <ConfirmModal tasks = {props.taskes} bool={all} handleDeleteAllOrDoneTask={props.handleDeleteAllOrDoneTask} >Delete all tasks</ConfirmModal>
            
         </div>
     </Fragment>

@@ -10,8 +10,6 @@ export default function Task(props) {
    const toggleCheck = ()=>{
     setIsChecked(prevState =>!prevState);
    };
-console.log(isChecked);
-console.log(props.done);
 //
   return (
     <li className={clasess.border}>

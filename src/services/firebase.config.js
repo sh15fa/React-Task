@@ -5,13 +5,12 @@ import { getFirestore } from "firebase/firestore";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBXEFsuit1Xcqp09hAH_u82sbN4320T3HE",
-  authDomain: "react-15-7e235.firebaseapp.com",
-  databaseURL: "https://react-15-7e235-default-rtdb.firebaseio.com",
-  projectId: "react-15-7e235",
-  storageBucket: "react-15-7e235.appspot.com",
-  messagingSenderId: "385598586219",
-  appId: "1:385598586219:web:36bd1c153c2fe5f982602e"
+  apiKey: "AIzaSyA0vVvVeKmTAjOLAtAEhlv3w-szVWFytrI",
+  authDomain: "react-7ee1b.firebaseapp.com",
+  projectId: "react-7ee1b",
+  storageBucket: "react-7ee1b.appspot.com",
+  messagingSenderId: "50019170678",
+  appId: "1:50019170678:web:24bd57670c0409fee6a257"
 };
 
   const app = initializeApp(firebaseConfig);
