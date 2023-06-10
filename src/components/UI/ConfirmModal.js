@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 //import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import classes from './Button.module.css';
 //import Button from 'react-bootstrap/Button';
 import Button from './Button';
+import TaskContext from '../../tasksCnx/TaskCnx';
 
 function ConfirmModal(props) {
   const [show, setShow] = useState(false);
   const [len,setLen]=useState(false);
+
+  const cnx=useContext(TaskContext);
 
   const handleClose = () => setShow(false);
   const handleShow = () => {setShow(true);
@@ -39,7 +42,7 @@ if(props.tasks.length ===0){
             Close
           </button>
           <button variant="primary" className={classes.btnConf} onClick={()=>{   
-            props.handleDeleteAllOrDoneTask(props.bool);
+            cnx.deleteAllOrDoneTasks(props.bool);
             handleClose();
           }
             }>

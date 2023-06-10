@@ -1,12 +1,14 @@
-import { useState,useRef } from 'react';
+import { useState,useRef, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import clasess from './Task.module.css';
 import classes from '../../todoInput/InputTsak.module.css';
+import TaskContext from '../../../tasksCnx/TaskCnx';
 //We can take some form example from ...(form in tailwind in css)...
 function EditTask(props) {
+  const ctx = useContext(TaskContext);
   const reff=useRef();
   const [show, setShow] = useState(false);
   const [vaL, setVal] = useState(false);
@@ -14,8 +16,7 @@ function EditTask(props) {
   const [taskkTitle, setTaskkTitle] = useState(props.taskTitle);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  let tsk=taskkTitle;
-  //console.log(tsk);
+  
 
   const inputIsValid = taskkTitle.trim() !== '';
   const inputIsInvalid = !inputIsValid && inputTouched===true;
@@ -37,17 +38,14 @@ function EditTask(props) {
         //setInputTouched(true);
         if(taskkTitle.trim()===''){
           return;
-        }if(inputTouched===false){
-          setTaskkTitle(props.taskTitle);
         }
-        console.log('hello from editing');
         console.log(props.id,taskkTitle);
-        props.updateTask(props.id,taskkTitle);
+        ctx.updateTask(props.id,taskkTitle);
         handleClose();
         setInputTouched(false);
       }
 
- // const isValidInput= inputIsValid && (props.taskTitle.trim()!=='');
+ 
 
   return (
     <>
@@ -76,10 +74,6 @@ function EditTask(props) {
                  type="text" 
                  defaultValue={props.taskTitle}
                   onChange={inputChangeHandler
-                    // ()=>{
-                    //  setTaskkTitle(reff.current.value); 
-                    
-                    // }
                     }
                     onBlur={inputBlurHandler}
                     

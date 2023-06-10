@@ -1,11 +1,9 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import Task from '../Task/Task';
 import classes from './TextList.module.css';
 import classe from '../TodoList.module.css';
 import ConfirmModal from '../../UI/ConfirmModal';
-import TaskContext from '../../../tasksCnx/TaskCnx';
 export default function TasksList(props) {
-  const taskCntx = useContext(TaskContext);
 
   const done =true;
   const all = false;
@@ -15,6 +13,8 @@ export default function TasksList(props) {
       tasks.push(props.taskes[i]);
     }
   }
+
+ 
   
   
   return (<Fragment>
@@ -25,15 +25,12 @@ export default function TasksList(props) {
         id={task.id}
         title={task.title}
         done={task.done}
-        handleDoneTask={props.handleDoneTask}
-        handleDeleteTask={props.handleDeleteTask}
-        updateTask={props.updateTask}
         />
       ))}
     </ul>
     <div className={classe.todoList}>
-            <ConfirmModal tasks={tasks} bool={done} handleDeleteAllOrDoneTask={props.handleDeleteAllOrDoneTask}> Delete done tasks</ConfirmModal>
-            <ConfirmModal tasks = {props.taskes} bool={all} handleDeleteAllOrDoneTask={props.handleDeleteAllOrDoneTask} >Delete all tasks</ConfirmModal>
+            <ConfirmModal tasks={tasks} bool={done} > Delete done tasks</ConfirmModal>
+            <ConfirmModal tasks = {props.taskes} bool={all} >Delete all tasks</ConfirmModal>
            
         </div>
     </Fragment>
