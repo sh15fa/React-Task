@@ -1,10 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import Task from '../Task/Task';
 import classes from './TextList.module.css';
 import classe from '../TodoList.module.css';
-import Button from '../../UI/Button';
 import ConfirmModal from '../../UI/ConfirmModal';
+import TaskContext from '../../../tasksCnx/TaskCnx';
 export default function TasksList(props) {
+  const taskCntx = useContext(TaskContext);
+
   const done =true;
   const all = false;
   let tasks=[];
