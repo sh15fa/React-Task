@@ -1,25 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classes from './TodoList.module.css';
 import Button from "../UI/Button";
 import TasksList from "./TasksList/TasksList";
 import {db} from '../../services/firebase.config';
+import TaskContext from "../../tasksCnx/TaskCnx";
 import {  collection , deleteDoc, doc, getDocs, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore";
 
 const TodoList = (props)=>{
+ 
 const [taskes, setTaskes] = useState([]);
 const [isGet,setIsGet]=useState(true);
 const [isDone,setIsDone]=useState(false);
-const [isTodo,setIsTodo]=useState(false);
-//fetching data from firestore
+const cnx = useContext(TaskContext);
 const collectionRef = collection(db ,'tasks' );
-const getTasks= async ()=>{
-  const q=query(collectionRef,orderBy('timestamp'));
-    let tasksData=[];
-    await getDocs (q).then((task)=>{
-        tasksData= task.docs.map(doc => ({...doc.data(),id:doc.id}));  
-    });
-    setTaskes(tasksData);
-}; 
 //fetchind done tasks or todo tasks
 const getDoneOrTodoTasks=async(bool)=>{
   setIsGet(false);
@@ -31,133 +24,44 @@ const getDoneOrTodoTasks=async(bool)=>{
    });
    
     
-};
+ };
 
-useEffect( ()=>{
-  if( isGet===true){
-    getTasks();
-  }else{
-    if(isDone===true){
-      getDoneOrTodoTasks(true);
-    }else{
-      getDoneOrTodoTasks(false);
-    }
+
+useEffect(()=>{
+  
+  if(isGet){
+    setTaskes(cnx.tasks);
+
   }
-  
-},[isGet,getTasks,isDone,getDoneOrTodoTasks]);
+  else{
+    if(isDone){
+            getDoneOrTodoTasks(true);
+          }else{
+            getDoneOrTodoTasks(false);
+          }
+  }
+    
+  },[cnx,isDone,isGet]);
 
 
-const  fetchAllTasks=  ()=>{
+
+const  fetchAllTasksHandler=  ()=>{
    setIsGet(true);
-  
    
  };
- //change checkbox value;
-const handleDoneTask=(id)=>{
-    const filteredItems = taskes.map(item => {
-			item.id === id && (item.done = !item.done)
-			return item
-		})
 
-		setTaskes(filteredItems);
-        console.log('tasks',taskes);
-        hadleCheckbox(id);
-  }
-  //change checkbox value in firestore
-  const hadleCheckbox = (id)=>{
-    console.log(id);
-    let done;
-    let title;
-    let timestamp;
-    const docRef=doc(db , 'tasks' , id);
-     taskes.map(item =>{
-        if(item.id===id){
-            done=item.done;
-            title = item.title;
-            timestamp=item.timestamp
-        }  
-    });
-    const checked ={"title":title,"done":done ,"timestamp":timestamp};
-    setDoc(docRef,checked);
-  }
-
-//deletting a task
-  const handleDeleteTask=async(id)=>{
-    try{
-        if(window.confirm('Are you sure you want delete this task')){
-            const documentRef = doc(db , "tasks" , id);
-        await deleteDoc(documentRef );
-        
-        }
-    }catch(err){
-      console.log(err);  
-    }
-  };
-  //Update a task
-  const updateTask=(id , taskUpdatedValue)=>{
-    console.log('updated Task in list');
-    const docRef = doc(db,'tasks' ,id);
-    updateDoc(docRef,{
-      title:taskUpdatedValue,
-    } ).catch(error =>{
-      console.log(error.message)
-    })
-  };
-  //delete all Or done tasks
-  const handleDeleteAllOrDoneTask=async(allOrDone)=>{
-   let bool;
-    let tasks=[];
-    await getDocs (collectionRef).then((task)=>{
-      tasks= task.docs.map(doc => ({...doc.data(),id:doc.id}));
-      
-  });
-  if(allOrDone==false){
-   if( window.confirm('Are you sure you want delete All tasks')){
-      bool=false;
-   }
-    
-  }
-  else if(allOrDone=== true ){
-    if(window.confirm('Are you sure you want delete your Done tasks')){
-      bool=true;
-    }
-    
-  }
-    for(let i =0;i<tasks.length;i++){
-      const documentRef = doc(db , "tasks" , tasks[i].id);
-      if(bool===false){
-         await deleteDoc(documentRef );
-
-        
-      }
-      else if(bool=== true && tasks[i].done===true){
-        
-        await deleteDoc(documentRef );
-        
-      }
-      
-    }
-
-    
-
-  };
+  
     const divBtn= classes.divBtn;
     return <div>
         <h1>TodoList</h1>
         <div className={classes.todoList}>
-            <div className={divBtn}><Button  onClick={fetchAllTasks}>All</Button></div>
-            <div className={divBtn}><Button onClick={()=>{setIsDone(true);
-            setIsGet(false);}} >Done</Button></div>
-            <div className={divBtn}><Button onClick={()=>{setIsDone(false);
-            setIsGet(false);}}>Todo</Button></div>
+            <div className={divBtn}><Button  onClick={fetchAllTasksHandler}>All</Button></div>
+            <div className={divBtn}><Button onClick={()=>{setIsGet(false); setIsDone(true)}} >Done</Button></div>
+            <div className={divBtn}><Button onClick={()=>{setIsGet(false); setIsDone(false)}}>Todo</Button></div>
         </div>
         
         {taskes.length===0 && <p className={classes.notaskYet}>There is no tasks here yet</p>}
-        {taskes.length>0 && <TasksList taskes={taskes} handleDoneTask={handleDoneTask} 
-        handleDeleteTask={handleDeleteTask}
-        handleDeleteAllOrDoneTask={handleDeleteAllOrDoneTask}
-        updateTask={updateTask}
-        />}
+        {taskes.length>0 && <TasksList taskes={taskes}/>}
     </div>
 };
 
